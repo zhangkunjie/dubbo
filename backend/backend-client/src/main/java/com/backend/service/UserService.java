@@ -1,7 +1,7 @@
 package com.backend.service;
 
 
-import com.backend.model.User;
+import com.model.User;
 
 import java.util.List;
 

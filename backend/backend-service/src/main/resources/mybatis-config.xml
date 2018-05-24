@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
     <typeAliases>
-        <typeAlias type="com.backend.model.User" alias="User"/>
+        <typeAlias type="com.model.User" alias="User"/>
     </typeAliases>
    <mappers>
         <mapper resource="mapper/userMapper.xml"></mapper>

@@ -1,8 +1,9 @@
 package com.backend.service.impl;
 
 import com.backend.dao.UserDao;
-import com.backend.model.User;
 import com.backend.service.UserService;
+
+import com.model.User;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

@@ -1,4 +1,4 @@
-package com.backend.common;
+package com.common;
 
 import java.io.Serializable;
 import java.util.HashMap;
