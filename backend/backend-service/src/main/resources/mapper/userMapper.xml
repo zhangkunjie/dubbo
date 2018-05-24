@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.backend.dao.UserDao">
+    <!--配置一个resultMap 指定返回的类型 -->
+    <resultMap id="userRM" type="User">
+        <id column="id" property="id"/>
+        <result column="userId" property="user_id"/>
+        <result column="createDate" property="create_date"/>
+        <result column="name" property="name"/>
+        <!-- <result column="sex" property="sex" />-->
+        <!-- <result column="age" property="age" />-->
+    </resultMap>
+
+    <select id="findAll" parameterType="User" resultMap="userRM">
+        select id,user_id,create_date,name from user
+        <where>
+            <if test="id!=null and id!=''">
+                and id=#{id}
+            </if>
+        </where>
+    </select>
+    <!--<select id="findAllMapList" parameterType="StudentModel" resultMap="studentModelRM">
+        select id,name from student
+        <where>
+            <if test="id!=null and id!=''">
+                and id=1
+            </if>
+        </where>
+    </select>
+    <select id="findStudentById" parameterType="Map" resultMap="studentModelRM">
+        select id,name from student
+        <where>
+            &lt;!&ndash;         <if test="name!=null and name!=''">
+                      and name=#{name}
+                  </if>&ndash;&gt;
+            <if test="id!=null and id!=''">
+                and id=#{id}
+            </if>
+        </where>
+    </select>-->
+</mapper>
