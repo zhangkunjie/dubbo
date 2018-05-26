@@ -1,7 +1,9 @@
 package com.backend.service;
 
 
-import com.model.User;
+import com.common.model.PageModel;
+import com.common.model.User;
+import sun.jvm.hotspot.debugger.Page;
 
 import java.util.List;
 
@@ -10,5 +12,7 @@ import java.util.List;
  */
 public interface UserService {
     public List<User> findUserList(User user);
+
+    public PageModel<User> findPage(User user, int pageSize, int pageNo);
 
 }

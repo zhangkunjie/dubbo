@@ -4,9 +4,14 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
     <typeAliases>
-        <typeAlias type="com.model.User" alias="User"/>
+        <package name="com.common.model"/>
     </typeAliases>
-   <mappers>
+    <plugins>
+        <plugin interceptor="com.common.interceptor.PaginationInterceptor">
+            <property name="databaseType" value="mysql"/>
+        </plugin>
+    </plugins>
+    <mappers>
         <mapper resource="mapper/userMapper.xml"></mapper>
     </mappers>
 </configuration>

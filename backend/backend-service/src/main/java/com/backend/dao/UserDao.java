@@ -1,7 +1,7 @@
 package com.backend.dao;
 
 
-import com.model.User;
+import com.common.model.User;
 
 /**
  * Created by kunjie.zhang on 2018/5/23.
