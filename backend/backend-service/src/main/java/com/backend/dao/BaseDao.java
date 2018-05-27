@@ -10,5 +10,5 @@ import java.util.List;
 public interface BaseDao<T extends java.io.Serializable, PK extends java.io.Serializable> {
     public List<T> findAll(T t);
 
-    public List<T> findPage(PageModel<T> t);
+    public List<T> findPage(T t);
 }

@@ -7,11 +7,13 @@
         <package name="com.common.model"/>
     </typeAliases>
     <plugins>
-        <plugin interceptor="com.common.interceptor.PaginationInterceptor">
-            <property name="databaseType" value="mysql"/>
+        <plugin interceptor="com.github.pagehelper.PageInterceptor">
+            <property name="offsetAsPageNum" value="false"/>
+            <property name="rowBoundsWithCount" value="false"/>
+            <property name="pageSizeZero" value="true"/>
+            <property name="reasonable" value="false"/>
+            <property name="supportMethodsArguments" value="false"/>
+            <property name="returnPageInfo" value="none"/>
         </plugin>
     </plugins>
-    <mappers>
-        <mapper resource="mapper/userMapper.xml"></mapper>
-    </mappers>
 </configuration>

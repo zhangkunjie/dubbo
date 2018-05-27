@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.backend.dao.StudentDao">
+    <!--配置一个resultMap 指定返回的类型 -->
+    <resultMap id="studentModelRM" type="Student">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="gender" property="gender"/>
+        <result column="age" property="age"/>
+        <result column="birthday" property="birthday"/>
+        <result column="address" property="address"/>
+        <result column="status" property="status"/>
+    </resultMap>
+
+    <select id="findAll" parameterType="Student" resultMap="studentModelRM">
+        select id,name from student
+        <where>
+            <if test="id!=null and id!=''">
+                and id=#{id}
+            </if>
+        </where>
+    </select>
+    <select id="findAllMapList" parameterType="Student" resultMap="studentModelRM">
+        select id,name from student
+        <where>
+            <if test="id!=null and id!=''">
+                and id=1
+            </if>
+        </where>
+    </select>
+    <select id="findStudentById" parameterType="Map" resultMap="studentModelRM">
+        select id,name from student
+        <where>
+            <!--         <if test="name!=null and name!=''">
+                      and name=#{name}
+                  </if>-->
+            <if test="id!=null and id!=''">
+                and id=#{id}
+            </if>
+        </where>
+    </select>
+    <!-- id 固定的 findPaging parameterType 固定的 pageModel params.entity固定写法 -->
+    <select id="findPage" parameterType="student" resultMap="studentModelRM">
+        SELECT
+        s.id,
+        s.name,
+        s.gender,
+        s.age,
+        s.birthday,
+        s.address,
+        s.status
+        FROM
+        student s
+        <where>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(name)">
+                AND m.`name` like CONCAT('%',"\\" #{name},'%' )
+            </if>
+            <if test="gender != null">
+                AND s.`gender`=#{gender}
+            </if>
+            <if test="age != null">
+                AND s.`age`=#{age}
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(address)">
+                AND m.`address` like CONCAT('%',"\\" #{address},'%' )
+            </if>
+        </where>
+        ORDER by id
+    </select>
+</mapper>

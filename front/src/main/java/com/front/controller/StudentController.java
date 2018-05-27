@@ -1,36 +1,33 @@
 package com.front.controller;
 
-import com.backend.service.UserService;
-import com.common.model.PageModel;
+import com.backend.service.StudentService;
+import com.common.model.Student;
 import com.common.utils.JsonCallBack;
-import com.common.model.User;
+import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by kunjie.zhang on 2018/5/24.
- */
-@Controller
-@RequestMapping("/user")
-public class UserController {
+@RestController
+@RequestMapping("/student")
+public class StudentController {
     @Autowired
-    private UserService userService;
-    private Logger logger = LoggerFactory.getLogger(UserController.class);
+    private StudentService studentService;
+    private Logger logger = LoggerFactory.getLogger(StudentController.class);
 
-    @RequestMapping(value = "/findUserList", method = RequestMethod.GET)
+
+    @RequestMapping(value = "/findAllStudents", method = RequestMethod.GET)
     @ResponseBody
-    public JsonCallBack findAllStudents(User user) {
+    public JsonCallBack findAllStudents(Student studentModel) {
         logger.info("findAllStudents called");
         JsonCallBack jsonCallBack = new JsonCallBack(true);
-        Map<String, Object> pairs = jsonCallBack.getPairs();
         try {
-            List<User> list = userService.findUserList(user);
+            Map<String, Object> pairs = jsonCallBack.getPairs();
+            List<Student> list = studentService.findAllStudnts(studentModel);
             pairs.put("dat", list);
         } catch (Exception e) {
             jsonCallBack.setSuccess(false);
@@ -43,13 +40,13 @@ public class UserController {
 
     @RequestMapping(value = "/findPage/{pageNo}/{pageSize}", method = RequestMethod.POST)
     @ResponseBody
-    public JsonCallBack findPage(@RequestBody User user,
+    public JsonCallBack findPage(@RequestBody Student student,
                                  @PathVariable int pageNo, @PathVariable int pageSize) {
         logger.info("findAllStudents called");
         JsonCallBack jsonCallBack = new JsonCallBack(true);
         Map<String, Object> pairs = jsonCallBack.getPairs();
         try {
-            PageModel<User> studentModel = userService.findPage(user, pageNo, pageSize);
+            PageInfo<Student> studentModel = studentService.findPage(student, pageNo, pageSize);
             pairs.put("dat", studentModel);
         } catch (Exception e) {
             jsonCallBack.setSuccess(false);
@@ -59,6 +56,5 @@ public class UserController {
         }
         return jsonCallBack;
     }
-
 
 }
