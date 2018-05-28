@@ -12,30 +12,123 @@
         <result column="status" property="status"/>
     </resultMap>
 
+    <insert id="insert" parameterType="Student" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO student
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(name)">
+                name,
+            </if>
+            <if test="age!=null">
+                age,
+            </if>
+            <if test="gender!=null">
+                gender,
+            </if>
+            <if test="birthday!=null">
+                birthday,
+            </if>
+            <if test="status!=null">
+                status,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(address)">
+                address,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(name)">
+                #{name},
+            </if>
+            <if test="age!=null">
+                #{age},
+            </if>
+            <if test="gender!=null">
+                #{gender},
+            </if>
+            <if test="birthday!=null">
+                #{birthday},
+            </if>
+            <if test="status!=null">
+                #{status},
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(address)">
+                #{address},
+            </if>
+        </trim>
+    </insert>
+
+    <insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO student(`name`,gender,birthday,age,address,`status`)
+        VALUES
+        <foreach collection="list" item="user" index="user" separator=",">
+            (
+            #{user.name},
+            #{user.gender},
+            #{user.birthday},
+            #{user.age},
+            #{user.address},
+            #{user.status}
+            )
+        </foreach>
+    </insert>
+    <delete id="delete" parameterType="Student">
+        DELETE FROM student
+        <where>
+            id=#{id}
+        </where>
+    </delete>
+    <update id="update" parameterType="Student">
+        UPDATE student
+        <set>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(name)">
+                name=#{name},
+            </if>
+            <if test="age!=null">
+                age=#{age},
+            </if>
+            <if test="gender!=null">
+                gender=#{gender},
+            </if>
+            <if test="birthday!=null">
+                birthday=#{birthday},
+            </if>
+            <if test="status!=null">
+                status=#{status},
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(address)">
+                address=#{address},
+            </if>
+        </set>
+        WHERE id=#{id}
+    </update>
+
+    <select id="getById" parameterType="Student" resultType="Student">
+        SELECT
+        s.*
+        FROM
+        student s
+        <where>
+            s.id=#{id}
+        </where>
+    </select>
+
     <select id="findAll" parameterType="Student" resultMap="studentModelRM">
-        select id,name from student
+        select
+        s.*
+        from
+        student s
         <where>
-            <if test="id!=null and id!=''">
-                and id=#{id}
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(name)">
+                AND m.`name` like CONCAT('%',"\\" #{name},'%' )
             </if>
-        </where>
-    </select>
-    <select id="findAllMapList" parameterType="Student" resultMap="studentModelRM">
-        select id,name from student
-        <where>
-            <if test="id!=null and id!=''">
-                and id=1
+            <if test="gender != null">
+                AND s.`gender`=#{gender}
             </if>
-        </where>
-    </select>
-    <select id="findStudentById" parameterType="Map" resultMap="studentModelRM">
-        select id,name from student
-        <where>
-            <!--         <if test="name!=null and name!=''">
-                      and name=#{name}
-                  </if>-->
-            <if test="id!=null and id!=''">
-                and id=#{id}
+            <if test="age != null">
+                AND s.`age`=#{age}
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(address)">
+                AND m.`address` like CONCAT('%',"\\" #{address},'%' )
             </if>
         </where>
     </select>
